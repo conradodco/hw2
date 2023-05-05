@@ -277,6 +277,12 @@ puts ""
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
 
+cast = Movie.joins(roles: :actor).select("movies.title, roles.character_name, actors.name")
 
+title_width = cast.max_by { |cast| cast[:title].length }[:title].length
+character_width = cast.max_by { |cast| cast[:character_name].length }[:character_name].length
+actor_width = cast.max_by { |cast| cast[:name].length }[:name].length
 
-# # Batman Begins          Christian Bale        Bruce Wayne
+cast.each do |t|
+  printf("%-#{title_width}s  %-#{actor_width}s  %-#{character_width}s\n", t[:title], t[:name], t[:character_name])
+end
