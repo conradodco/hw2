@@ -258,6 +258,14 @@ puts ""
 # TODO!
 
 
+movies = Movie.joins(:studio).select("movies.title, movies.year_released, movies.rated, studios.name")
+
+for movie in movies 
+      puts "#{movie.title}\t#{movie.year_released}\t#{movie.rated}\t#{movie.name}\n"
+end
+
+
+
 # Prints a header for the cast output
 puts ""
 puts "Top Cast"
