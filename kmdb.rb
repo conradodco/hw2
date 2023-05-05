@@ -257,14 +257,16 @@ puts ""
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
 
-
 movies = Movie.joins(:studio).select("movies.title, movies.year_released, movies.rated, studios.name")
 
-for movie in movies 
-      puts "#{movie.title}\t#{movie.year_released}\t#{movie.rated}\t#{movie.name}\n"
-end
+title_width = movies.max_by { |movie| movie[:title].length }[:title].length
+year_width = movies.max_by { |movie| movie[:year_released].to_s.length }[:year_released].to_s.length
+rating_width = movies.max_by { |movie| movie[:rated].to_s.length }[:rated].to_s.length 
+studio_width = movies.max_by { |movie| movie[:name].to_s.length }[:name].to_s.length 
 
-
+movies.each do |movie|
+    printf("%-#{title_width}s  %-#{year_width}s  %-#{rating_width}s %-#{studio_width}s\n", movie[:title], movie[:year_released], movie[:rated], movie[:name])
+  end
 
 # Prints a header for the cast output
 puts ""
@@ -274,3 +276,7 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
+
+
+
+# # Batman Begins          Christian Bale        Bruce Wayne
